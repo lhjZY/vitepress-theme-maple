@@ -1,6 +1,6 @@
 {
   "name": "vitepress-theme-maple",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A minimalist VitePress theme with a clean editorial feel",
   "type": "module",
   "main": "./dist/index.js",
@@ -11,12 +11,10 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./styles": "./dist/index.css",
-    "./posts.data": "./posts.data.ts"
+    "./styles": "./dist/index.css"
   },
   "files": [
-    "dist",
-    "posts.data.ts"
+    "dist"
   ],
   "scripts": {
     "build": "vite build && vue-tsc --declaration --emitDeclarationOnly --outDir dist",

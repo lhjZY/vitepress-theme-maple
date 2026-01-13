@@ -19,7 +19,7 @@ export default defineConfig({
       fileName: "index",
     },
     rollupOptions: {
-      external: ["vue", "vitepress", "medium-zoom", "vitepress-theme-maple/posts.data"],
+      external: ["vue", "vitepress", "medium-zoom", "@site/posts.data"],
       output: {
         globals: {
           vue: "Vue",

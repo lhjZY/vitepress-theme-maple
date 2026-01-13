@@ -8,13 +8,13 @@
     "declaration": true,
     "declarationDir": "./dist",
     "outDir": "./dist",
-    "rootDir": ".",
+    "rootDir": "./src",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"]
   },
-  "include": ["src/**/*.ts", "src/**/*.vue", "posts.data.ts"],
+  "include": ["src/**/*.ts", "src/**/*.vue", "src/**/*.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

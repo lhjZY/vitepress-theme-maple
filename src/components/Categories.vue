@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { withBase } from "vitepress";
 import { ref, computed, onMounted } from "vue";
-import { data as posts } from "vitepress-theme-maple/posts.data";
+import { data as posts } from "@site/posts.data";
 
 const currentCategory = ref("");
 
