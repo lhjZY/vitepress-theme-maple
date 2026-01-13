@@ -77,4 +77,19 @@ const pageTitle = computed(() => {
 .main-content {
   flex: 1;
 }
+
+@media (max-width: 768px) {
+  .layout {
+    padding: 0;
+  }
+
+  .site-container {
+    min-height: 100vh;
+    border: none;
+  }
+
+  .content-wrapper {
+    padding: 0 var(--spacing-md);
+  }
+}
 </style>

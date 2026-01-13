@@ -198,12 +198,9 @@ const homeTitle = computed(() => {
   .post-body {
     flex-direction: column;
   }
-
+  
   .post-cover {
-    flex: none;
-    max-width: 100%;
-    order: -1;
-    margin-bottom: var(--spacing-md);
+    display: none;
   }
 }
 </style>

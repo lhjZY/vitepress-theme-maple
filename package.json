@@ -1,6 +1,6 @@
 {
   "name": "vitepress-theme-maple",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A minimalist VitePress theme with a clean editorial feel",
   "type": "module",
   "main": "./dist/index.js",
