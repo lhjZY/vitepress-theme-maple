@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { withBase } from "vitepress";
 import { ref, computed, onMounted } from "vue";
-import { data as posts } from "@site/posts.data";
+import { usePosts } from "../composables/usePosts";
+
+const postsRef = usePosts();
+const posts = computed(() => postsRef.value);
 
 const currentCategory = ref("");
 
@@ -28,7 +31,7 @@ const goBack = () => {
 const categories = computed(() => {
   const categoryMap: Record<string, number> = {};
 
-  posts.forEach((post) => {
+  posts.value.forEach((post) => {
     if (post.category) {
       categoryMap[post.category] = (categoryMap[post.category] || 0) + 1;
     }
@@ -41,7 +44,7 @@ const categories = computed(() => {
 
 const categoryPosts = computed(() => {
   if (!currentCategory.value) return [];
-  return posts.filter((post) => post.category === currentCategory.value);
+  return posts.value.filter((post) => post.category === currentCategory.value);
 });
 
 const formatDate = (dateStr: string) => {

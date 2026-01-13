@@ -13,13 +13,21 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: resolve(__dirname, "src/index.ts"),
-      name: "VitepressThemeMaple",
+      entry: {
+        index: resolve(__dirname, "src/index.ts"),
+        loader: resolve(__dirname, "src/loader.ts"),
+      },
       formats: ["es"],
-      fileName: "index",
     },
     rollupOptions: {
-      external: ["vue", "vitepress", "medium-zoom", "@site/posts.data"],
+      external: (id) => {
+        return (
+          id === "vue" ||
+          id === "vitepress" ||
+          id === "medium-zoom" ||
+          id.startsWith("@site/")
+        );
+      },
       output: {
         globals: {
           vue: "Vue",

@@ -21,15 +21,39 @@ pnpm add vitepress-theme-maple
 
 ## Usage
 
-### Basic Setup
+### Quick Start (from zero)
 
-In your `.vitepress/theme/index.ts`:
+1) Install the theme:
+
+```bash
+pnpm add vitepress-theme-maple
+```
+
+2) Create `.vitepress/posts.data.ts`:
 
 ```ts
-import Theme from 'vitepress-theme-maple'
-import 'vitepress-theme-maple/styles'
+import { createPostsLoader, type Post } from "vitepress-theme-maple/loader";
 
-export default Theme
+declare const data: Post[];
+export { data };
+
+export default createPostsLoader();
+```
+
+3) Wire the theme and inject posts in `.vitepress/theme/index.ts`:
+
+```ts
+import Theme, { providePosts } from "vitepress-theme-maple";
+import "vitepress-theme-maple/styles";
+import { data as posts } from "../posts.data";
+
+export default {
+  ...Theme,
+  setup() {
+    providePosts(posts);
+    Theme.setup?.();
+  },
+};
 ```
 
 ### Recommended Folder Structure
@@ -53,83 +77,7 @@ The theme automatically loads posts from:
 - `posts/*/index.md`
 - `posts/*/*.md`
 
-Create `.vitepress/posts.data.ts`:
-
-```ts
-import { createContentLoader } from 'vitepress'
-
-export interface Post {
-  title: string
-  url: string
-  date: string
-  category?: string
-  author?: string
-  tags?: string[]
-  excerpt?: string
-  cover?: string
-}
-
-declare const data: Post[]
-export { data }
-
-function extractFirstImage(html: string): { image: string | null; text: string } {
-  const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/i
-  const match = html.match(imgRegex)
-
-  if (match) {
-    const image = match[1]
-    const text = html.replace(imgRegex, '').trim()
-    return { image, text }
-  }
-
-  return { image: null, text: html }
-}
-
-function resolveImagePath(imagePath: string, postUrl: string): string {
-  if (imagePath.startsWith('/') || imagePath.startsWith('http')) {
-    return imagePath
-  }
-
-  const cleanPath = imagePath.replace(/^\\.\\//, '')
-  let baseDir = postUrl
-
-  if (postUrl.endsWith('.html')) {
-    baseDir = postUrl.substring(0, postUrl.lastIndexOf('/') + 1)
-  } else if (!postUrl.endsWith('/')) {
-    baseDir = postUrl + '/'
-  }
-
-  return baseDir + cleanPath
-}
-
-export default createContentLoader(['posts/*.md', 'posts/*/index.md', 'posts/*/*.md'], {
-  excerpt: '<!--more-->',
-  transform(raw): Post[] {
-    return raw
-      .map(({ url, frontmatter, excerpt }) => {
-        const { image, text } = extractFirstImage(excerpt || '')
-        const cover = image ? resolveImagePath(image, url) : undefined
-
-        return {
-          title: frontmatter.title || 'Untitled',
-          url: url,
-          date: frontmatter.date ? formatDate(frontmatter.date) : '',
-          category: frontmatter.category || '',
-          author: frontmatter.author || '',
-          tags: frontmatter.tags || [],
-          excerpt: text,
-          cover: cover
-        }
-      })
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  }
-})
-
-function formatDate(date: string | Date): string {
-  const d = new Date(date)
-  return d.toISOString().split('T')[0]
-}
-```
+Create `.vitepress/posts.data.ts` is required and uses `createPostsLoader()` above.
 
 ### Writing Posts
 
@@ -256,15 +204,39 @@ MIT
 
 ## 使用
 
-### 基础设置
+### 从零开始（快速步骤）
 
-在 `.vitepress/theme/index.ts` 中：
+1) 安装主题：
+
+```bash
+pnpm add vitepress-theme-maple
+```
+
+2) 创建 `.vitepress/posts.data.ts`：
 
 ```ts
-import Theme from 'vitepress-theme-maple'
-import 'vitepress-theme-maple/styles'
+import { createPostsLoader, type Post } from "vitepress-theme-maple/loader";
 
-export default Theme
+declare const data: Post[];
+export { data };
+
+export default createPostsLoader();
+```
+
+3) 在 `.vitepress/theme/index.ts` 注入文章数据：
+
+```ts
+import Theme, { providePosts } from "vitepress-theme-maple";
+import "vitepress-theme-maple/styles";
+import { data as posts } from "../posts.data";
+
+export default {
+  ...Theme,
+  setup() {
+    providePosts(posts);
+    Theme.setup?.();
+  },
+};
 ```
 
 ### 推荐目录结构
@@ -288,83 +260,7 @@ docs/
 - `posts/*/index.md`
 - `posts/*/*.md`
 
-创建 `.vitepress/posts.data.ts`：
-
-```ts
-import { createContentLoader } from 'vitepress'
-
-export interface Post {
-  title: string
-  url: string
-  date: string
-  category?: string
-  author?: string
-  tags?: string[]
-  excerpt?: string
-  cover?: string
-}
-
-declare const data: Post[]
-export { data }
-
-function extractFirstImage(html: string): { image: string | null; text: string } {
-  const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/i
-  const match = html.match(imgRegex)
-
-  if (match) {
-    const image = match[1]
-    const text = html.replace(imgRegex, '').trim()
-    return { image, text }
-  }
-
-  return { image: null, text: html }
-}
-
-function resolveImagePath(imagePath: string, postUrl: string): string {
-  if (imagePath.startsWith('/') || imagePath.startsWith('http')) {
-    return imagePath
-  }
-
-  const cleanPath = imagePath.replace(/^\\.\\//, '')
-  let baseDir = postUrl
-
-  if (postUrl.endsWith('.html')) {
-    baseDir = postUrl.substring(0, postUrl.lastIndexOf('/') + 1)
-  } else if (!postUrl.endsWith('/')) {
-    baseDir = postUrl + '/'
-  }
-
-  return baseDir + cleanPath
-}
-
-export default createContentLoader(['posts/*.md', 'posts/*/index.md', 'posts/*/*.md'], {
-  excerpt: '<!--more-->',
-  transform(raw): Post[] {
-    return raw
-      .map(({ url, frontmatter, excerpt }) => {
-        const { image, text } = extractFirstImage(excerpt || '')
-        const cover = image ? resolveImagePath(image, url) : undefined
-
-        return {
-          title: frontmatter.title || 'Untitled',
-          url: url,
-          date: frontmatter.date ? formatDate(frontmatter.date) : '',
-          category: frontmatter.category || '',
-          author: frontmatter.author || '',
-          tags: frontmatter.tags || [],
-          excerpt: text,
-          cover: cover
-        }
-      })
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  }
-})
-
-function formatDate(date: string | Date): string {
-  const d = new Date(date)
-  return d.toISOString().split('T')[0]
-}
-```
+创建 `.vitepress/posts.data.ts`（必需）并使用上面的 `createPostsLoader()` 即可。
 
 ### 写文章
 

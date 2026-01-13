@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { withBase } from "vitepress";
 import { computed } from "vue";
-import { data as posts } from "@site/posts.data";
+import { usePosts } from "../composables/usePosts";
+
+const postsRef = usePosts();
+const posts = computed(() => postsRef.value);
 
 const postsByYear = computed(() => {
-  const groups: Record<string, typeof posts> = {};
+  const groups: Record<string, typeof posts.value> = {};
 
-  posts.forEach((post) => {
+  posts.value.forEach((post) => {
     const year = new Date(post.date).getFullYear().toString();
     if (!groups[year]) {
       groups[year] = [];
@@ -14,7 +17,9 @@ const postsByYear = computed(() => {
     groups[year].push(post);
   });
 
-  const sortedYears = Object.keys(groups).sort((a, b) => parseInt(b) - parseInt(a));
+  const sortedYears = Object.keys(groups).sort(
+    (a, b) => parseInt(b) - parseInt(a)
+  );
 
   return sortedYears.map((year) => ({
     year,
@@ -35,9 +40,15 @@ const formatDate = (dateStr: string) => {
     <div v-for="group in postsByYear" :key="group.year" class="archive-year">
       <h2 class="archive-year-title">{{ group.year }}</h2>
       <ul class="archive-posts">
-        <li v-for="post in group.posts" :key="post.url" class="archive-post-item">
+        <li
+          v-for="post in group.posts"
+          :key="post.url"
+          class="archive-post-item"
+        >
           <span class="archive-post-date">{{ formatDate(post.date) }}</span>
-          <a :href="withBase(post.url)" class="archive-post-title">{{ post.title }}</a>
+          <a :href="withBase(post.url)" class="archive-post-title">{{
+            post.title
+          }}</a>
         </li>
       </ul>
     </div>

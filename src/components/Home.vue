@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { withBase, useData } from "vitepress";
 import { computed } from "vue";
-import { data as posts } from "@site/posts.data";
+import { usePosts } from "../composables/usePosts";
 
 const { theme } = useData();
+const postsRef = usePosts();
+const posts = computed(() => postsRef.value);
 
 const homeTitle = computed(() => {
   return theme.value.homeTitle || "文章列表";
@@ -29,7 +31,11 @@ const homeTitle = computed(() => {
 
         <div class="post-body" :class="{ 'has-cover': post.cover }">
           <div class="post-content">
-            <div v-if="post.excerpt" class="post-excerpt" v-html="post.excerpt"></div>
+            <div
+              v-if="post.excerpt"
+              class="post-excerpt"
+              v-html="post.excerpt"
+            ></div>
             <a :href="withBase(post.url)" class="post-read-more">
               read more →
             </a>
@@ -198,7 +204,7 @@ const homeTitle = computed(() => {
   .post-body {
     flex-direction: column;
   }
-  
+
   .post-cover {
     display: none;
   }
