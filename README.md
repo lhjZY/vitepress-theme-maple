@@ -1,5 +1,7 @@
 # vitepress-theme-maple
 
+[English](#vitepress-theme-maple) | [中文](#中文文档)
+
 A minimalist VitePress theme with a clean editorial feel.
 
 ## Features
