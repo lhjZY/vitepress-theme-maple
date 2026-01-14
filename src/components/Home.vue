@@ -43,7 +43,7 @@ const homeTitle = computed(() => {
 
           <div v-if="post.cover" class="post-cover">
             <a :href="withBase(post.url)">
-              <img :src="post.cover" :alt="post.title" />
+              <img :src="withBase(post.cover)" :alt="post.title" />
             </a>
           </div>
         </div>
