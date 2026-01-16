@@ -1,4 +1,5 @@
 # vitepress-theme-maple
+<img width="1784" height="1646" alt="image" src="https://github.com/user-attachments/assets/0dd1c8ef-4c91-4baf-bec2-3222ae8f2620" />
 
 [中文](#中文文档) | [English](#english)
 
