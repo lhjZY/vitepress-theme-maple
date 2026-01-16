@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useData, useRoute, withBase } from "vitepress";
 import { computed } from "vue";
+import headerSvg from "../assets/header.svg";
 
 const { theme } = useData();
 const route = useRoute();
@@ -22,11 +23,9 @@ const isActive = (link: string) => {
   <header class="site-header">
     <!-- Logo Row with Colorful Bar -->
     <div class="header-logo-row">
-      <a href="/" class="site-logo">
-        Maple
-      </a>
+      <a href="/" class="site-logo"> Maple </a>
       <div class="header-bar">
-        <img :src="withBase('/header.svg')" alt="Header decoration" />
+        <img :src="headerSvg" alt="Header decoration" />
       </div>
     </div>
 
@@ -68,7 +67,6 @@ const isActive = (link: string) => {
   flex-shrink: 0;
 }
 
-
 .header-bar {
   flex: 1;
   height: 100%;
@@ -91,7 +89,6 @@ const isActive = (link: string) => {
   gap: var(--spacing-xs);
   padding: var(--spacing-sm) var(--spacing-lg);
   flex-wrap: wrap;
-  
 }
 
 .nav-item {
@@ -108,7 +105,7 @@ const isActive = (link: string) => {
 }
 
 .nav-item::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 6px;
   top: 50%;

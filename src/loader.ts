@@ -29,51 +29,6 @@ export interface PostsLoaderOptions {
 }
 
 /**
- * Extract the first image from HTML content
- */
-function extractFirstImage(html: string): {
-  image: string | null;
-  text: string;
-} {
-  const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/i;
-  const match = html.match(imgRegex);
-
-  if (match) {
-    const image = match[1];
-    // Remove image tag, keep plain text
-    const text = html.replace(imgRegex, "").trim();
-    return { image, text };
-  }
-
-  return { image: null, text: html };
-}
-
-/**
- * Convert relative image paths to absolute paths
- */
-function resolveImagePath(imagePath: string, postUrl: string): string {
-  // If already absolute, return as is
-  if (imagePath.startsWith("/") || imagePath.startsWith("http")) {
-    return imagePath;
-  }
-
-  // Handle relative paths ./xxx or xxx
-  const cleanPath = imagePath.replace(/^\.\//, "");
-
-  // Get the directory of the post
-  // postUrl format: /posts/hello-vitepress/ or /posts/welcome.html
-  let baseDir = postUrl;
-  if (postUrl.endsWith(".html")) {
-    // Single file: /posts/welcome.html -> /posts/
-    baseDir = postUrl.substring(0, postUrl.lastIndexOf("/") + 1);
-  } else if (!postUrl.endsWith("/")) {
-    baseDir = postUrl + "/";
-  }
-
-  return baseDir + cleanPath;
-}
-
-/**
  * Format date to YYYY-MM-DD string
  */
 function formatDate(date: string | Date): string {
@@ -87,11 +42,6 @@ function formatDate(date: string | Date): string {
 function defaultTransform(raw: ContentData[]): Post[] {
   return raw
     .map(({ url, frontmatter, excerpt }) => {
-      const { image, text } = extractFirstImage(excerpt || "");
-
-      // Convert image path to absolute path
-      const cover = image ? resolveImagePath(image, url) : undefined;
-
       return {
         title: (frontmatter.title as string) || "Untitled",
         url: url,
@@ -101,8 +51,8 @@ function defaultTransform(raw: ContentData[]): Post[] {
         category: (frontmatter.category as string) || "",
         author: (frontmatter.author as string) || "",
         tags: (frontmatter.tags as string[]) || [],
-        excerpt: text,
-        cover: cover,
+        // 保留原始 HTML，使 Markdown 渲染内容正常显示
+        excerpt: excerpt ? excerpt.trim() : "",
       };
     })
     .sort((a, b) => {

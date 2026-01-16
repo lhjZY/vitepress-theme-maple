@@ -29,7 +29,7 @@ const homeTitle = computed(() => {
 
         <div class="post-separator"></div>
 
-        <div class="post-body" :class="{ 'has-cover': post.cover }">
+        <div class="post-body">
           <div class="post-content">
             <div
               v-if="post.excerpt"
@@ -38,12 +38,6 @@ const homeTitle = computed(() => {
             ></div>
             <a :href="withBase(post.url)" class="post-read-more">
               read more →
-            </a>
-          </div>
-
-          <div v-if="post.cover" class="post-cover">
-            <a :href="withBase(post.url)">
-              <img :src="withBase(post.cover)" :alt="post.title" />
             </a>
           </div>
         </div>
@@ -120,15 +114,6 @@ const homeTitle = computed(() => {
   align-items: stretch;
 }
 
-.post-body.has-cover {
-  align-items: flex-start;
-}
-
-.post-body.has-cover .post-content {
-  flex: 1;
-  min-width: 0;
-}
-
 .post-content {
   flex: 1;
   min-height: 0;
@@ -136,25 +121,6 @@ const homeTitle = computed(() => {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-}
-
-.post-cover {
-  flex: 0 0 300px;
-  max-width: 300px;
-  height: 100%;
-}
-
-.post-cover img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  transition: opacity var(--transition-fast);
-  box-shadow: 2px 2px #bbb;
-}
-
-.post-cover img:hover {
-  opacity: 0.9;
 }
 
 .post-excerpt {
@@ -203,10 +169,6 @@ const homeTitle = computed(() => {
 
   .post-body {
     flex-direction: column;
-  }
-
-  .post-cover {
-    display: none;
   }
 }
 </style>

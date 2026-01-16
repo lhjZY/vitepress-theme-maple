@@ -4,63 +4,62 @@
 
 export interface ThemeConfig {
   /** Logo image path */
-  logo?: string
-  
+  logo?: string;
+
   /** Site title displayed in header */
-  siteTitle?: string
-  
+  siteTitle?: string;
+
   /** Home page title */
-  homeTitle?: string
-  
+  homeTitle?: string;
+
   /** Author name */
-  author?: string
-  
+  author?: string;
+
   /** Navigation menu items */
-  nav?: NavItem[]
-  
+  nav?: NavItem[];
+
   /** Footer configuration */
-  footer?: FooterConfig
-  
+  footer?: FooterConfig;
+
   /** Social links */
-  socialLinks?: SocialLink[]
-  
+  socialLinks?: SocialLink[];
+
   /** Container max width (default: 840px) */
-  containerMaxWidth?: string
-  
+  containerMaxWidth?: string;
+
   /** Accent color (default: #ed1c24) */
-  accentColor?: string
+  accentColor?: string;
 }
 
 export interface NavItem {
-  text: string
-  link: string
+  text: string;
+  link: string;
 }
 
 export interface FooterConfig {
   /** Copyright text */
-  copyright?: string
-  
+  copyright?: string;
+
   /** Footer links */
-  links?: FooterLink[]
+  links?: FooterLink[];
 }
 
 export interface FooterLink {
-  text: string
-  link: string
+  text: string;
+  link: string;
 }
 
 export interface SocialLink {
-  icon: 'github' | 'twitter' | 'linkedin' | string
-  link: string
+  icon: "github" | "twitter" | "linkedin" | string;
+  link: string;
 }
 
 export interface Post {
-  title: string
-  url: string
-  date: string
-  category?: string
-  author?: string
-  tags?: string[]
-  excerpt?: string
-  cover?: string
+  title: string;
+  url: string;
+  date: string;
+  category?: string;
+  author?: string;
+  tags?: string[];
+  excerpt?: string;
 }
